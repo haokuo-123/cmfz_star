@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDAO">
+<!--<select id="findBySex" resultType="ECharts" parameterType="String">
+    select CONCAT(month(create_date),'月') as month,count(id) from user where sex=#{sex} group by month(create_date)
+</select>-->
+</mapper>
