@@ -16,6 +16,7 @@ public class CmfzStarApplication {
 
     public static void main(String[] args) {
         //测试测试
+        //测试2
 
         SpringApplication.run(CmfzStarApplication.class, args);
     }
