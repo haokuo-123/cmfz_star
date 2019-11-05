@@ -15,6 +15,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class CmfzStarApplication {
 
     public static void main(String[] args) {
+        //测试测试
 
         SpringApplication.run(CmfzStarApplication.class, args);
     }
