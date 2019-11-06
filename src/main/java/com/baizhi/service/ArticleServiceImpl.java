@@ -1,5 +1,7 @@
 package com.baizhi.service;
 
+import com.baizhi.annotation.ClearRedisCache;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.ArticleDAO;
 import com.baizhi.entity.Article;
 import org.apache.ibatis.session.RowBounds;
@@ -17,6 +19,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
+    @RedisCache
     public Map<String, Object> findAll(Integer page, Integer rows) {
            Article article = new Article();
         RowBounds rowBounds = new RowBounds((page-1)*rows,rows);
@@ -31,6 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @ClearRedisCache
     public void save(Article article) {
         article.setId(UUID.randomUUID().toString());
         article.setCreateDate(new Date());
@@ -38,11 +42,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Article article) {
         articleDAO.updateByPrimaryKeySelective(article);
     }
 
     @Override
+    @ClearRedisCache
     public void delete(String id) {
         articleDAO.deleteByPrimaryKey(id);
     }

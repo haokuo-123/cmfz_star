@@ -2,13 +2,20 @@ package com.baizhi;
 
 import com.baizhi.dao.BannerDAO;
 import com.baizhi.dao.UserDAO;
+import com.baizhi.entity.Admin;
+import com.baizhi.poi.User;
 import com.baizhi.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.BoundListOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -19,6 +26,8 @@ class CmfzStarApplicationTests {
    private UserDAO userDAO;
    @Autowired
    private UserService userService;
+   @Autowired
+   private RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
@@ -94,4 +103,38 @@ class CmfzStarApplicationTests {
             System.out.println();
         }*/
     }
+    @Test
+    public void testString(){
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        valueOperations.set("name","zhangsan");
+        valueOperations.set("admin",new Admin("99","ss","111111","ss"));
+        Object name = valueOperations.get("admin");
+        System.out.println(name);
+        Admin admin = (Admin) valueOperations.get("admin");
+        System.out.println(admin.getId());
+        System.out.println(admin.getUsername());
+        System.out.println(admin.getPassword());
+        System.out.println(admin.getNickname());
+    }
+    @Test
+    public void testList(){
+        ListOperations listOperations = redisTemplate.opsForList();
+        listOperations.leftPush("aa","123");
+        listOperations.leftPush("aa",new Admin("88","kk","1111111","ee"));
+        List lsit = listOperations.range("aa", 0, -1);
+        for (Object o : lsit) {
+            System.out.println(o);
+        }
+    }
+    @Test
+    public void testList2(){
+        BoundListOperations ops = redisTemplate.boundListOps("aa");
+        ops.leftPush("123");
+        ops.leftPush(new Admin("55","ssss","232323","ggg"));
+        List list = ops.range(0, -1);
+        for (Object o : list) {
+            System.out.println(o);
+        }
+    }
+
 }

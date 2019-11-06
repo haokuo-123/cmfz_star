@@ -1,18 +1,14 @@
 package com.baizhi.service;
 
+import com.baizhi.annotation.ClearRedisCache;
 import com.baizhi.dao.ChapterDAO;
-import com.baizhi.entity.Album;
 import com.baizhi.entity.Chapter;
+import com.baizhi.annotation.RedisCache;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -21,6 +17,7 @@ public class ChapterServiceImpl implements ChapterService {
     @Autowired
     private ChapterDAO chapterDAO;
     @Override
+    @RedisCache
     public Map<String, Object> findAll(Integer page, Integer rows, String albumId) {
         Chapter chapter = new Chapter();
         chapter.setAlbumId(albumId);
@@ -36,6 +33,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    @ClearRedisCache
     public String save(Chapter chapter) {
         chapter.setId(UUID.randomUUID().toString());
         chapter.setCreateDate(new Date());
@@ -47,6 +45,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Chapter chapter) {
         int i = chapterDAO.updateByPrimaryKeySelective(chapter);
         if(i == 0){

@@ -1,9 +1,11 @@
 package com.baizhi.service;
 
+import com.baizhi.annotation.ClearRedisCache;
 import com.baizhi.dao.AlbumDAO;
 import com.baizhi.dao.StarDAO;
 import com.baizhi.entity.Album;
 import com.baizhi.entity.Star;
+import com.baizhi.annotation.RedisCache;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Autowired
     private StarDAO starDAO;
     @Override
+    @RedisCache
     public Map<String, Object> findAll(Integer page, Integer rows) {
         Album album = new Album();
         RowBounds rowBounds = new RowBounds((page-1)*rows,rows);
@@ -33,6 +36,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedisCache
     public String save(Album album) {
         album.setId(UUID.randomUUID().toString());
         album.setCreateDate(new Date());
@@ -45,6 +49,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Album album) {
         if("".equals(album.getCover())){
             album.setCover(null);

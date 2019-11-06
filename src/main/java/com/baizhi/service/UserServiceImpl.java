@@ -2,6 +2,7 @@ package com.baizhi.service;
 
 import com.baizhi.dao.UserDAO;
 import com.baizhi.entity.User;
+import com.baizhi.annotation.RedisCache;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
     @Override
+    @RedisCache
     public Map<String, Object> findAll(Integer page, Integer rows, String starId) {
         User user = new User();
         user.setStarId(starId);
