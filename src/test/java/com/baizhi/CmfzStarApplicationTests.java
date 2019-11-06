@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 @SpringBootTest
 class CmfzStarApplicationTests {
     @Autowired
@@ -19,7 +23,11 @@ class CmfzStarApplicationTests {
     @Test
     void contextLoads() {
 
-
+        List<String> num = Arrays.asList("4","6","3","1","5","2") ;
+        Collections.sort(num);
+        for (String s : num) {
+            System.out.print(s+",");
+        }
      /*   List<Banner> banners = bannerDAO.selectAll();
         for (Banner banner : banners) {
             System.out.println(banner);
